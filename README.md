@@ -27,4 +27,4 @@ Google Sheets was used to explore the FAF6 dataset and perform preliminary data 
 - Maximum recorded value: 238,492.9794
 - Records with exactly zero tonnage: 0
 
-These results represent the data included in the working spreadsheet. Dataset units, coverage, and aggregation levels require further validation before drawing national-level conclusions.
+These results represent the data included in the working spreadsheet. Dataset units, coverage, and aggregation levels require further validation before drawing national-level conclusions. 
