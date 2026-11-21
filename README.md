@@ -80,7 +80,7 @@ However, freight tonnage alone does not establish actual supply chain vulnerabil
 
 Explore the published analysis:
 
-[View Interactive Tableau Visualization](https://public.tableau.com/app/profile/arturo.encarnacion/viz/state_truck_dependency_2022_csv_/FreightVolumebyTransportationMode)
+https://public.tableau.com/app/profile/arturo.encarnacion/viz/state_truck_dependency_2022_csv_/TruckDependencybyState
 
 The project includes:
 
