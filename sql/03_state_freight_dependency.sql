@@ -8,32 +8,32 @@
 -- ============================================================
 
 -- OBJECTIVE:
--- Calculate the percentage of freight tonnage transported
--- by truck for each U.S. origin state.
+-- Calculate the percentage of domestic freight tonnage
+-- transported by truck for each U.S. origin state.
 --
 -- Enrich the results with state names using a LEFT JOIN
 -- between freight data and a FIPS state lookup table.
 --
--- NOTE:
+-- METHODOLOGY:
+-- Domestic freight only (trade_type = 1).
 -- Freight volumes are expressed in thousand tons.
--- Results are preliminary and require validation of
--- dataset coverage and aggregation before final conclusions.
+-- State dependency is based on freight origin, not transit.
+-- Truck transportation is identified by dms_mode = 1.
 
 
--- STEP 1: Aggregate freight tonnage by origin state.
+-- STEP 1: Aggregate domestic freight tonnage by origin state.
 
 WITH freight_by_state AS (
-
     SELECT
         dms_origst,
 
-        -- Total freight tonnage across transportation modes
+        -- Total domestic freight across transportation modes
         ROUND(
             SUM(tons_2022),
             2
         ) AS total_thousand_tons,
 
-        -- Freight tonnage transported by truck
+        -- Domestic freight transported by truck
         ROUND(
             SUM(
                 CASE
@@ -47,9 +47,12 @@ WITH freight_by_state AS (
     FROM
         `seismic-elf-479821-p4.freight_analysis.faf6_freight_data`
 
-    WHERE dms_origst IS NOT NULL
+    WHERE
+        dms_origst IS NOT NULL
+        AND trade_type = 1
 
-    GROUP BY dms_origst
+    GROUP BY
+        dms_origst
 )
 
 
@@ -74,13 +77,16 @@ SELECT
         2
     ) AS truck_dependency_pct
 
-FROM freight_by_state AS freight
+FROM
+    freight_by_state AS freight
 
 LEFT JOIN
     `seismic-elf-479821-p4.freight_analysis.state_fips_lookup`
     AS states
 
-ON freight.dms_origst = states.state_code
+ON
+    freight.dms_origst = states.state_code
 
 -- Rank origin states by truck dependency
-ORDER BY truck_dependency_pct DESC;
+ORDER BY
+    truck_dependency_pct DESC;
