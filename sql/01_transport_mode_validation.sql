@@ -1,26 +1,27 @@
--- Project: US Supply Chain Vulnerability & Freight Dependency Analysis
--- Analysis: Transport Mode Data Validation
--- Purpose: Investigate missing transportation mode names
--- and recover available names using transportation mode codes.
 
-WITH transport_modes AS (
-    SELECT DISTINCT
-        mode_code,
-        transport_mode_name
-    FROM `seismic-elf-479821-p4.freight_analysis.faf6_freight_data`
-    WHERE transport_mode_name IS NOT NULL
-)
+-- Project: US Supply Chain Vulnerability & Freight Dependency Analysis
+-- Analysis: Transportation Mode Validation
+-- Dataset: FAF6, Domestic Freight, 2022
 
 SELECT
-    f.dms_mode,
-    m.transport_mode_name,
+    dms_mode,
+    CASE dms_mode
+        WHEN 1 THEN 'Truck'
+        WHEN 2 THEN 'Rail'
+        WHEN 3 THEN 'Water'
+        WHEN 4 THEN 'Air (includes truck-air)'
+        WHEN 5 THEN 'Multiple Modes & Mail'
+        WHEN 6 THEN 'Pipeline'
+        WHEN 7 THEN 'Other & Unknown'
+        ELSE 'Unclassified'
+    END AS transportation_mode,
     COUNT(*) AS total_records,
-    ROUND(AVG(f.tons_2022), 2) AS avg_tons
-FROM `seismic-elf-479821-p4.freight_analysis.faf6_freight_data` AS f
-LEFT JOIN transport_modes AS m
-    ON f.dms_mode = m.mode_code
-WHERE f.transport_mode_name IS NULL
+    ROUND(SUM(tons_2022), 2) AS total_thousand_tons
+FROM
+    `seismic-elf-479821-p4.freight_analysis.faf6_freight_data`
+WHERE
+    trade_type = 1
 GROUP BY
-    f.dms_mode,
-    m.transport_mode_name
-ORDER BY avg_tons DESC;
+    dms_mode
+ORDER BY
+    total_thousand_tons DESC;
