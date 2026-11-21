@@ -28,3 +28,29 @@ Google Sheets was used to explore the FAF6 dataset and perform preliminary data 
 - Records with exactly zero tonnage: 0
 
 These results represent the data included in the working spreadsheet. Dataset units, coverage, and aggregation levels require further validation before drawing national-level conclusions. 
+
+## Key Findings
+
+**1. Truck Transportation Dominates Domestic Freight**
+
+Truck transportation accounts for approximately 65.0% of total domestic freight tonnage in the 2022 FAF6 dataset, making it the largest transportation mode by volume.
+
+**2. Texas and California Lead in Truck Freight Volume**
+
+Texas records approximately 1.18 billion tons of truck freight originating in the state, followed by California with approximately 920 million tons.
+
+**3. Truck Dependency Varies Significantly Across States**
+
+Florida relies on trucks for 91.41% of its domestic outbound freight tonnage, while Wyoming records only 14.82%. This highlights substantial differences in transportation-mode composition.
+
+**4. Alternative Transportation Modes Remain Important**
+
+Pipeline and rail represent the second- and third-largest transportation categories by domestic freight tonnage, respectively.
+
+**5. Potential Supply Chain Implications**
+
+States with high truck dependency may have greater exposure to trucking-related disruptions. However, freight tonnage alone cannot establish actual supply chain vulnerability without additional information about infrastructure, alternative capacity, and commodity composition.
+
+### Methodology Note
+
+The analysis uses 2022 FAF6 domestic freight data (`trade_type = 1`), aggregated by state of origin and transportation mode. Freight volumes are reported in thousand tons. Data validation identified 155,016 domestic records and zero exact duplicate rows.
